@@ -23,10 +23,11 @@ print filtered_string
  
 
 #3.Identify the type of numbers:
-#a.
-numbers='0X7AEb.3+4jc.-01234d.3.14e-24.'
-numnums = sum(c.isdigit() for c in numbers) 
-print numnums
+#a.numbers=0X7AE Hex constant
+ #b.3+4j Complex number
+#c.-01234 Octal Constant
+#d.3.14e-24 Complex number
+
 
 #//To do
 #Write a program for String Formatting Operator % which should 
@@ -37,3 +38,7 @@ print numnums
 #d.Hexadecimal integer (UPPERcase letters)
 #e.Floating point real number
 #f.Exponential notation (with lowercase 'e')
+print '%(char)c is char %(signdec)03d is signed dec %(oct)03o is octal %(hex)02x is hexadecimal %(float)03f is a float and %(exp)03e is an exponent .' % \
+          {'char': "c", "signdec": 2, "oct":3,"hex":45,"float":52,"exp":6000}
+
+
