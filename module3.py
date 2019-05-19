@@ -1,4 +1,4 @@
-
+from operator import itemgetter
 import random
 play = True
 while (play):
@@ -78,7 +78,7 @@ while (play):
 			return
 	
 	def askDivQuestion(arrayD):
-                stringask =  "What is "+str(arrayD[0])+" - "+str(arrayD[1])+" = ? "
+                stringask =  "What is "+str(arrayD[0])+" / "+str(arrayD[1])+" = ? "
                 divA = raw_input(stringask)
 		if(divA==""): divA=0
 		if(Div(arrayD)==int(divA)): 
@@ -93,9 +93,9 @@ while (play):
 	def Add(a):
 		return a[0]+a[1]
 	def Div(a):
-		return a[0]+a[1]
+		return a[0]/a[1]
 	def Sub(a):
-		return a[0]+a[1]
+		return a[0]-a[1]
 
 	def Subtract(a):
 		
@@ -154,3 +154,26 @@ while (play):
 #What's 18 divided by 3? 6That's right --well done
 #Continue or exit (Continue:C, Exit: E): E
 
+#2.Write a recursive function to compute x raised to the power of n.
+
+def pow(x,n):
+	if n==0: return 1
+	else: return x*pow(x,n-1)
+
+answer = pow(2,4)
+print "2 to the 4th power: "
+print answer
+
+#3.Sort the list using lambda function mylist = [["john", 1, "a"], 
+# ["larry", 0, "b"]]. Sort the list by second item 1 and 0.
+
+mylist = [["john", 1, "a"],["larry", 0, "b"]]
+
+print "sorting with lambda key 2:"
+print sorted(mylist,key=lambda x:x[1])
+
+#4.Sort the list using operator.itemgetter function mylist = [["john", 1, "a"],
+# ["larry", 0, "b"]]. Sort the list by second item 1 and 0.
+
+print "sorting with itemgetter key 2: "
+print sorted(mylist,key=itemgetter(1))
