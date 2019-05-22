@@ -97,3 +97,40 @@ with con:
 	for row in rows:
 		print row
 
+
+#7.Correct the below code. [Note: Question 5 should be successfully executed]
+
+import sqlite3 as lite
+con = lite.connect('test.db')    
+with con:
+	con.row_factory = lite.Row
+	cur = con.cursor() 
+	cur.execute("SELECT * FROM Cars")
+	rows = cur.fetchall()
+	for row in rows:
+		print "%s %s %s" % (row['Id'], row['Name'], row['Price'])
+
+#8.Correct the below code and it should update the values.
+
+import sqlite3 as lite
+import sys
+uId = 1
+uPrice = 62300 
+con = lite.connect('test.db')
+with con:
+	cur = con.cursor()    
+	cur.execute("UPDATE Cars SET Price=? WHERE Id=?", (uPrice, uId))        
+	con.commit()
+	print "Number of rows updated: %d" % cur.rowcount
+
+#9.Correct the below code so that it displays 
+#the metadata info of the cars table.
+
+import sqlite3 as lite
+con = lite.connect('test.db')
+with con:
+	cur = con.cursor()    
+	cur.execute("PRAGMA table_info('Cars')")
+	data = cur.fetchall()
+	for d in data:
+		print d[0], d[1], d[2]
