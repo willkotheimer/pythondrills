@@ -134,3 +134,28 @@ with con:
 	data = cur.fetchall()
 	for d in data:
 		print d[0], d[1], d[2]
+
+#10.Correct the below code so that it displays all the rows from the Cars 
+#table with their column names.
+
+import sqlite3 as lite
+con = lite.connect('test.db')
+with con:
+	cur = con.cursor()
+	#print all table headers    
+	cur.execute("PRAGMA table_info('Cars')")
+        col_names = cur.fetchall()
+        print "%s %-10s %s" % (col_names[0][1], col_names[1][1], col_names[2][1])
+	# print all cars
+	cur.execute("SELECT * FROM Cars")
+        rows = cur.fetchall()
+        for row in rows:    
+		print "%2s %-10s %s" % row
+
+#11.Write python program which loads "sample-storedata.csv" file data 
+#into "store" table in sqlite3. "sample-storedata.csv" is supplied.
+
+#12.Fetch all the rows in store table created. 
+
+#13.Fetch the column names of the store table created.
+
