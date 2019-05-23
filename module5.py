@@ -154,8 +154,61 @@ with con:
 
 #11.Write python program which loads "sample-storedata.csv" file data 
 #into "store" table in sqlite3. "sample-storedata.csv" is supplied.
+import sqlite3 as lite
+import csv
 
+con = lite.connect('imported.db')
+with con:
+        cur = con.cursor()
+        cur.execute("DROP TABLE IF EXISTS store")
+        cur.execute("CREATE TABLE store(lat REAL, long REAL, phone TEXT, address TEXT)")
+	cols = []
+with open('sample-storedata.csv',"rb") as f:
+        reader = csv.reader(f)
+ 
+        header = True
+        for row in reader:
+            if header:
+                # gather column names from the first row of the csv
+                header = False
+ 
+                sql = "DROP TABLE IF EXISTS store"
+                cur.execute(sql)
+                sql = "CREATE TABLE store(latitude REAL NOT NULL,longtitude REAL NOT NULL,phone TEXT NOT NULL,address TEXT NOT NULL)"
+                cur.execute(sql)
+ 
+                for column in row:
+                    if column.lower().endswith("_id"):
+                        index = "%s__%s" % ( "store", column )
+                        sql = "CREATE INDEX %s on %s (%s)" % ( index, "store", column )
+                        cur.execute(sql)
+ 
+                insertsql = "INSERT INTO %s VALUES (%s)" % ('store',
+                            ", ".join([ "?" for column in row ]))
+ 
+                rowlen = len(row)
+            else:
+                # skip lines that don't have the right number of columns
+                if len(row) == rowlen:
+                    cur.execute(insertsql, row)
+ 
+        con.commit()
+ 
+cur.close()
 #12.Fetch all the rows in store table created. 
+con = lite.connect('imported.db')
+with con:
+        cur = con.cursor()
+        cur.execute("SELECT * FROM store")
+        rows = cur.fetchall()
+        for row in rows:
+                print str(row)
 
 #13.Fetch the column names of the store table created.
-
+con = lite.connect('imported.db')
+with con:
+        cur = con.cursor()
+        cur.execute("PRAGMA table_info('store')")
+        data = cur.fetchall()
+        for d in data:
+                print d[0], d[1], d[2]
