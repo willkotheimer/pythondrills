@@ -36,3 +36,18 @@ for link in soup.find_all('a'):
 	print link.get('href')
 
 #to do: recursive search
+import urllib2
+quote_page = "http://www.jackroeusa.com"
+def lookup(html):
+	page = urllib2.urlopen(html)
+	soup = BeautifulSoup(page,'html.parser')
+	#print (soup.get_text())
+	for link in soup.find_all('a'):
+		html2 = link.get('href')
+		print(html2)
+		if html2!=None: 
+			htmltemp = urllib2.urlopen(html2).read()
+			soup2 = BeautifulSoup(htmltemp,'html.parser')
+			print soup2.get_text()
+			
+lookup(quote_page)
